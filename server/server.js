@@ -24,18 +24,17 @@ io.on('connection', (socket) => {
   //   console.log('createEmail', newEmail);
   // });
 
-  socket.emit('newMessage', {
-    from: 'SidSuryanarayanan@Colostate.edu',
-    text: 'PhD requires a lot of self motivation',
-    createdAt: '11-19-14'
-  });
-
   socket.on('newMessage', (newMessage) => {
     console.log('newMessage', newMessage);
   });
 
   socket.on('createMessage', (createMessage) => {
     console.log('created message from client', createMessage);
+    io.emit('newMessage', {
+      from: createMessage.from,
+      text: createMessage.text,
+      createdAt: new Date().getTime()
+    })
   });
 
   socket.on('disconnect', () => {
